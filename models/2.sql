@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Таблица participants
 CREATE TABLE IF NOT EXISTS `participants` (
   `id` INT NOT NULL,
-  `user_id` INT NOT NULL,
+  `user_id` INT NULL,
   `full_name` VARCHAR(45) UNIQUE NOT NULL,
   `gender` VARCHAR(45) NULL,
   `teams_id` INT NOT NULL,
