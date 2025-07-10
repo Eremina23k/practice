@@ -1,8 +1,8 @@
-from pydantic import BaseModel, EmailStr 
+from pydantic import BaseModel
 from typing import Optional
-from datetime import date
+from datetime import date, time
 
-class Competitions(BaseModel):
+class Competitions(BaseModel): 
     id: int
     date: date
 
@@ -18,5 +18,36 @@ class Users(BaseModel):
     password : str
     gender : str
     role : str
+
+class Participants ():
+    id : int
+    user_id : int
+    full_name : str
+    gender : str
+    teams_id : int
+    teams_competitions_id : int
+
+class Participants_results():
+    id : int
+    bib_number : Optional[int] = None
+    start_time : Optional[time] = None
+    finish_time : Optional[time] = None
+    checkpoints_visited : Optional[int] = None
+    total_time : Optional[time] = None
+    participants_id : int
+    teams_id : int
+    competitions_id : int
+    position : int
+
+class Team_results ():
+    id : int
+    participants_results_id : int
+    participants_results_participants_id : int
+    participants_results_teams_id : int
+    participants_results_competitions_id : int
+    position : int
+
+
+
 # user = UserExport(id=1, email="user@example.com")
 # print(user.model_dump_json())
