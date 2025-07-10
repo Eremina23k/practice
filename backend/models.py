@@ -1,4 +1,5 @@
-# разобраться с созданием json файлов
+# разобраться с созданием json файл
+# print(user.model_dump_json())
 
 from pydantic import BaseModel
 from typing import Optional
@@ -48,6 +49,3 @@ class Team_results ():
     participants_results_teams_id : int
     participants_results_competitions_id : int
     position : int
-
-
-# print(user.model_dump_json())
