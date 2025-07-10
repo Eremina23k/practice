@@ -1,3 +1,5 @@
+# разобраться с созданием json файлов
+
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date, time
@@ -21,7 +23,7 @@ class Users(BaseModel):
 
 class Participants ():
     id : int
-    user_id : int
+    user_id : Optional[int] = None
     full_name : str
     gender : str
     teams_id : int
@@ -48,6 +50,4 @@ class Team_results ():
     position : int
 
 
-
-# user = UserExport(id=1, email="user@example.com")
 # print(user.model_dump_json())
