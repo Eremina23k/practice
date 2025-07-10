@@ -1,4 +1,5 @@
 # разобраться с созданием json файл
+# мб надо расписать на In и Out!!
 # print(user.model_dump_json())
 
 from pydantic import BaseModel
