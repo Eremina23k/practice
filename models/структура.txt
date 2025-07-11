@@ -1,0 +1,55 @@
+project-root/
+├── backend/
+│   ├── db/
+│   │   ├── database.sqlite        # Основной файл БД
+│   │   ├── init.sql               # Скрипт создания таблиц
+│   │   └── json/                  # 📂 JSON-файлы для каждой таблицы
+│   │       ├── users.json
+│   │       ├── orders.json
+│   │       └── products.json
+│   ├── models.py                  # Pydantic модели
+│   ├── db_utils.py                # Работа с SQLite и JSON
+│   ├── routes.py                  # Эндпоинты API
+│   ├── main.py                    # Запуск FastAPI-приложения
+│   └── __init__.py
+├── electron/
+├── models/                        # SQL-файлы, временные дампы
+├── src/                           # TypeScript + React frontend
+│   ├── components/
+│   ├── pages/
+│   ├── services/                  # API-запросы к backend
+│   └── ...
+├── package.json
+├── vite.config.ts
+└── ...
+
+---------------------------------------------------------------
+
+📄 db_utils.py: экспорт таблиц в JSON
+Добавим универсальную функцию:
+
+---------------------------------------------------------------
+import sqlite3
+import json
+import os
+
+DB_PATH = "backend/db/database.sqlite"
+JSON_DIR = "backend/db/json"
+
+def export_table_to_json(table_name: str):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * FROM {table_name}")
+    columns = [desc[0] for desc in cursor.description]
+    rows = cursor.fetchall()
+    conn.close()
+
+    data = [dict(zip(columns, row)) for row in rows]
+
+    os.makedirs(JSON_DIR, exist_ok=True)
+    json_path = os.path.join(JSON_DIR, f"{table_name}.json")
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+    return json_path
+---------------------------------------------------------------
