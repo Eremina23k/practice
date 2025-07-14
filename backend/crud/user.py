@@ -1,12 +1,18 @@
 from sqlalchemy.orm import Session
 from models import User
 from schemas import UserIn
+from hashlib import md5
+
+# функция хеширования с помощью md5
+def hash_password_md5(password: str) -> str:
+    return md5(password.encode('utf-8')).hexdigest()
 
 def create_user(db: Session, user: UserIn):
+    hash_password = hash_password_md5(user.password)   # хеширование
     db_user = User(
         full_name=user.full_name,
         login=user.login,
-        password=user.password,  # хешировать!
+        password=hash_password,  # хешировано.
         gender=user.gender,
         role=user.role
     )
