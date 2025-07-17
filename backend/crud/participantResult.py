@@ -1,42 +1,45 @@
-from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from typing import List, Dict, Any
-from database import get_db
-from crud.participantResult import create_participant_result, get_participant_result, get_all_participant_results, update_participant_result, delete_participant_result
-from schemas import ParticipantsResultsIn, ParticipantsResultsOut
+from models import ParticipantResult
+from schemas import ParticipantsResultsIn
+from typing import List, Optional
 
-router = APIRouter()
+def create_participant_result(db: Session, result: ParticipantsResultsIn):
+    db_result = ParticipantResult(
+        bib_number=result.bib_number,
+        start_time=result.start_time,
+        finish_time=result.finish_time,
+        checkpoints_visited=result.checkpoints_visited,
+        total_time=result.total_time,
+        participant_id=result.participant_id,
+        team_id=result.team_id,
+        competition_id=result.competition_id,
+        position=result.position
+    )
+    db.add(db_result)
+    db.commit()
+    db.refresh(db_result)
+    return db_result
 
+def get_participant_result(db: Session, result_id: int) -> Optional[ParticipantResult]:
+    return db.query(ParticipantResult).filter(ParticipantResult.id == result_id).first()
 
-@router.post("/", response_model=ParticipantsResultsOut, status_code=201)
-def create_result(result: ParticipantsResultsIn, db: Session = Depends(get_db)):
-    return create_participant_result(db, result)
+def get_all_participant_results(db: Session) -> List[ParticipantResult]:
+    return db.query(ParticipantResult).all()
 
-
-@router.get("/", response_model=List[ParticipantsResultsOut])
-def get_all_results(db: Session = Depends(get_db)):
-    return get_all_participant_results(db)
-
-
-@router.get("/{result_id}", response_model=ParticipantsResultsOut)
-def get_result(result_id: int, db: Session = Depends(get_db)):
-    result = get_participant_result(db, result_id)
+def update_participant_result(db: Session, result_id: int, update_data: dict) -> Optional[ParticipantResult]:
+    result = db.query(ParticipantResult).filter(ParticipantResult.id == result_id).first()
     if not result:
-        raise HTTPException(status_code=404, detail="Result not found")
+        return None
+    for key, value in update_data.items():
+        if hasattr(result, key):
+            setattr(result, key, value)
+    db.commit()
+    db.refresh(result)
     return result
 
-
-@router.put("/{result_id}", response_model=ParticipantsResultsOut)
-def update_result(result_id: int, update_data: Dict[str, Any], db: Session = Depends(get_db)):
-    updated = update_participant_result(db, result_id, update_data)
-    if not updated:
-        raise HTTPException(status_code=404, detail="Result not found")
-    return updated
-
-
-@router.delete("/{result_id}", response_model=ParticipantsResultsOut)
-def delete_result(result_id: int, db: Session = Depends(get_db)):
-    deleted = delete_participant_result(db, result_id)
-    if not deleted:
-        raise HTTPException(status_code=404, detail="Result not found")
-    return deleted
+def delete_participant_result(db: Session, result_id: int) -> Optional[ParticipantResult]:
+    result = db.query(ParticipantResult).filter(ParticipantResult.id == result_id).first()
+    if result:
+        db.delete(result)
+        db.commit()
+    return result
