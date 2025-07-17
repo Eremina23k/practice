@@ -9,7 +9,7 @@ def creat_team (db: Session, team: TeamIn) :
     db.refresh(db_team)
     return db_team
 
-def read_competition (db: Session, team_id: int) :
+def read_team (db: Session, team_id: int) :
     return db.query(Team).filter(Team.id == team_id).first()
 
 def update_team(db: Session, team_id: int, name: str = None, competition_id: int = None):

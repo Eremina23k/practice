@@ -26,6 +26,10 @@ class TeamOut(TeamIn):
 
 
 # Пользователи
+class UserRole(str, Enum):
+    admin = "admin"
+    user = "user"
+    
 class UserIn(BaseModel):
     full_name: str
     login: str
