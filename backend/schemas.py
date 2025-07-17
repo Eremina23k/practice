@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date, time
+from sqlalchemy import Enum
 
 # Соревнования 
 class CompetitionIn(BaseModel): 
@@ -29,13 +30,13 @@ class TeamOut(TeamIn):
 class UserRole(str, Enum):
     admin = "admin"
     user = "user"
-    
+
 class UserIn(BaseModel):
     full_name: str
     login: str
     password: str
     gender: str
-    role: str
+    role: UserRole
 
 class UserOut(UserIn):
     id: int
