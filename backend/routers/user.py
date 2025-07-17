@@ -11,6 +11,9 @@ router = APIRouter()
 def api_create_user(user: UserIn, db: Session = Depends(get_db)):
     if get_user_by_login(db, user.login):
         raise HTTPException(status_code=400, detail="Login already exists")
-
     db_user = create_user(db, user)  # пароль будет захеширован внутри create_user
     return db_user
+
+@router.get("/{user_id}", response_model=UserOut)
+def get_u():
+    return
