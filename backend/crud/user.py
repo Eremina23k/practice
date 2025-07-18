@@ -33,6 +33,8 @@ def update_user(db: Session, user_id: int, new_data: dict):
         return None
     for key, value in new_data.items():
         if hasattr(user, key):
+            if key == "password":
+                value = hash_password_md5(value)  # Обязательно хешируем новый пароль
             setattr(user, key, value)
     db.commit()
     db.refresh(user)

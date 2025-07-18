@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, Time
+from sqlalchemy import Column, Enum, Integer, String, ForeignKey, Date, Time
 from sqlalchemy.orm import relationship, declarative_base
+
+from backend.schemas import UserRole
 # from datetime import date, time
 
 Base = declarative_base()
@@ -35,7 +37,7 @@ class User(Base):
     login = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     gender = Column(String, nullable=False)
-    role = Column(String, nullable=False)
+    role = Column(Enum(UserRole), default=UserRole.user)
 
     participants = relationship("Participant", back_populates="user")
 
