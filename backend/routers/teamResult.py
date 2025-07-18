@@ -12,24 +12,20 @@ from crud.teamResult import (
 )
 from schemas import TeamResultsIn, TeamResultsOut
 
-router = APIRouter(
-    prefix="/team-results",
-    tags=["team_results"]
-)
-
+router = APIRouter()
 
 @router.post("/", response_model=TeamResultsOut, status_code=201)
-def create_result(team_result: TeamResultsIn, db: Session = Depends(get_db)):
+def create_tr(team_result: TeamResultsIn, db: Session = Depends(get_db)):
     return create_team_result(db, team_result)
 
 
 @router.get("/", response_model=List[TeamResultsOut])
-def get_all_results(db: Session = Depends(get_db)):
+def get_tr(db: Session = Depends(get_db)):
     return get_all_team_results(db)
 
 
 @router.get("/{result_id}", response_model=TeamResultsOut)
-def get_result(result_id: int, db: Session = Depends(get_db)):
+def get_tr(result_id: int, db: Session = Depends(get_db)):
     result = get_team_result(db, result_id)
     if not result:
         raise HTTPException(status_code=404, detail="Result not found")
@@ -37,7 +33,7 @@ def get_result(result_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{result_id}", response_model=TeamResultsOut)
-def update_result(result_id: int, new_position: int = Body(..., embed=True), db: Session = Depends(get_db)):
+def update_tr(result_id: int, new_position: int = Body(..., embed=True), db: Session = Depends(get_db)):
     updated = update_team_result(db, result_id, new_position)
     if not updated:
         raise HTTPException(status_code=404, detail="Result not found")
