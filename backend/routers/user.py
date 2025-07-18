@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from crud.user import create_user, get_user, get_user_by_login, update_user, delete_user
 from schemas import UserIn, UserOut, UserRole
-from auth import authenticate_user, require_role  # 👈 Добавлено для авторизации
+from auth import authenticate_user, require_role  # Добавлено для авторизации
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
