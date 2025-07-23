@@ -1,0 +1,72 @@
+.winners-page {
+  background-color: #d7edff;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.winners-container {
+  max-width: 800px;
+  margin: 30px auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.winners-title {
+  text-align: center;
+  color: #2c8eff;
+}
+
+.winners-subtitle {
+  text-align: center;
+  color: #333;
+}
+
+.winners-dates {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.winners-date-item {
+  cursor: pointer;
+  padding: 10px 0;
+  border-bottom: 1px solid #b8dffc;
+  font-weight: bold;
+  color: #333;
+  min-width: 120px;
+  text-align: center;
+}
+
+.winners-date-item:hover,
+.winners-date-item.active {
+  color: #2c8eff;
+}
+
+.winners-tables {
+  margin-top: 15px;
+}
+
+.winners-section-title {
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+.winners-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.winners-table th,
+.winners-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.winners-table th {
+  background-color: #f0f0f0;
+} 

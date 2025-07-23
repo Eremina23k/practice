@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Проведение соревнования</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #d4f0ff;
+    }
+
+    header {
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 30px;
+      align-items: center;
+    }
+
+    header nav a {
+      margin: 0 10px;
+      color: #007acc;
+      text-decoration: none;
+    }
+
+    .btn {
+      background-color: #0094ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .btn-light {
+      background-color: #e0f0ff;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+    }
+
+    h2 {
+      color: #0094ff;
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    .input-row {
+      margin-bottom: 10px;
+    }
+
+    input[type="text"], select {
+      padding: 8px;
+      width: 200px;
+    }
+
+    .hint {
+      color: red;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div style="font-weight: bold; color: #0094ff;">ТурТрек</div>
+    <nav>
+      <a href="#">Участники</a>
+      <a href="#">Даты соревнований</a>
+      <a href="#">Победители</a>
+    </nav>
+    <div>
+      <button class="btn">Вход</button>
+      <button class="btn btn-light">Регистрация</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>Проведение соревнования</h2>
+    <div class="controls">
+      <button class="btn" onclick="showSection('add')">Добавить</button>
+      <button class="btn" onclick="showSection('edit')">Редактировать</button>
+      <button class="btn" onclick="showSection('run')">Провести</button>
+    </div>
+
+    <!-- Добавить -->
+    <div id="add" class="section">
+      <div class="input-row">
+        <label>Дата соревнований:</label>
+        <input type="text" placeholder="дд.мм.гггг" />
+      </div>
+      <div class="input-row">
+        <label>Загрузить файл в формате</label><br />
+        <table>
+          <tr><th>ФИО</th><th>Пол</th><th>Команда</th></tr>
+        </table>
+      </div>
+      <div class="input-row">
+        <input type="text" placeholder="Путь к файлу" />
+        <button class="btn">Загрузить</button>
+      </div>
+    </div>
+
+    <!-- Редактировать -->
+    <div id="edit" class="section">
+      <div class="input-row">
+        <label>Выбрать данные для редактирования по дате:</label>
+        <select><option>Дата соревнований</option></select>
+        <button class="btn">Выбрать</button>
+      </div>
+      <table>
+        <tr><td colspan="3">&nbsp;</td></tr>
+        <!-- пустая таблица -->
+      </table>
+    </div>
+
+    <!-- Провести -->
+    <div id="run" class="section">
+      <div class="input-row">
+        <label>Дата соревнований:</label>
+        <select><option>Дата соревнований</option></select>
+        <button class="btn">Выбрать</button>
+        <div class="hint">после выбора появляется таблица и кнопка "провести жеребьевку"</div>
+      </div>
+      <button class="btn">Провести жеребьевку</button>
+      <table>
+        <tr><td colspan="3">&nbsp;</td></tr>
+        <!-- пустая таблица -->
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // показать "Провести" по умолчанию
+    showSection('run');
+  </script>
+</body>
+</html>

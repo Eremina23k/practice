@@ -1,27 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Header.css';
 
-const getRole = (): 'guest' | 'user' | 'admin' => {
-  // В реальном приложении используйте контекст или глобальный стейт
-  return (localStorage.getItem('role') as 'guest' | 'user' | 'admin') || 'guest';
-};
+type Role = 'guest' | 'user' | 'admin';
 
-const Header: React.FC = () => {
-  const role = getRole();
+interface HeaderProps {
+  role?: Role;
+}
 
+const Header: React.FC<HeaderProps> = ({ role = 'guest' }) => {
   return (
-    <header style={{ background: '#f5f5f5', padding: '1rem 2rem', marginBottom: '2rem' }}>
-      <nav style={{ display: 'flex', gap: '1rem' }}>
-        <Link to="/">Главная</Link>
-        <Link to="/participants">Участники</Link>
-        <Link to="/teams">Команды</Link>
-        <Link to="/competitions">Соревнования</Link>
-        <Link to="/winners">Победители</Link>
+    <header className="header">
+      <div className="logo">ТурТрек</div>
+      <nav className="nav">
         {role === 'admin' && <Link to="/admin">Проведение</Link>}
-        {role === 'guest' && <><Link to="/login">Вход</Link><Link to="/register">Регистрация</Link></>}
-        {(role === 'user' || role === 'admin') && <Link to="/profile">Профиль</Link>}
-        {(role === 'user' || role === 'admin') && <Link to="/logout">Выход</Link>}
+        <Link to="/participants">Участники</Link>
+        <Link to="/competitions">Даты соревнований</Link>
+        <Link to="/winners">Победители</Link>
       </nav>
+      <div className="actions">
+        {role === 'guest' && <><Link to="/login" className="btn btn-primary">Вход</Link><Link to="/register" className="btn">Регистрация</Link></>}
+        {role === 'user' && <><Link to="/profile" className="btn">Профиль</Link><Link to="/logout" className="btn">Выход</Link></>}
+        {role === 'admin' && <><Link to="/profile" className="btn">Профиль</Link><Link to="/logout" className="btn">Выход</Link></>}
+      </div>
     </header>
   );
 };

@@ -7,12 +7,13 @@ import Teams from './pages/Teams';
 import Competitions from './pages/Competitions';
 import Winners from './pages/Winners';
 import AdminPanel from './pages/AdminPanel';
+import Header from './components/Header';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <>
-      {/* Здесь может быть Header */}
+      <Header role="guest" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

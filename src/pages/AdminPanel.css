@@ -1,0 +1,64 @@
+.admin-panel-page {
+  background-color: #d4f0ff;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.admin-panel-container {
+  max-width: 900px;
+  margin: 30px auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.admin-panel-title {
+  color: #0094ff;
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.admin-panel-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.admin-panel-btn {
+  background-color: #0094ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.admin-panel-section {
+  display: none;
+}
+
+.admin-panel-section-active {
+  display: block;
+}
+
+.admin-panel-input-row {
+  margin-bottom: 10px;
+}
+
+.admin-panel-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.admin-panel-table th,
+.admin-panel-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+} 

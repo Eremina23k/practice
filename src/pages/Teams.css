@@ -1,0 +1,36 @@
+.teams-page {
+  background-color: #d7edff;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.teams-title {
+  text-align: center;
+  color: #2c8eff;
+  margin-top: 30px;
+}
+
+.teams-table-container {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.teams-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.teams-table th,
+.teams-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.teams-table th {
+  background-color: #f0f0f0;
+} 

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import './Register.css';
 
 const Register: React.FC = () => {
-  const [fio, setFio] = useState('');
+  const [surname, setSurname] = useState('');
+  const [name, setName] = useState('');
+  const [patronymic, setPatronymic] = useState('');
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [accessCode, setAccessCode] = useState('');
@@ -12,27 +15,19 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '2rem auto' }}>
-      <h2>Регистрация</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>ФИО</label>
-          <input type="text" value={fio} onChange={e => setFio(e.target.value)} required />
-        </div>
-        <div>
-          <label>Логин</label>
-          <input type="text" value={login} onChange={e => setLogin(e.target.value)} required />
-        </div>
-        <div>
-          <label>Пароль</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
-        </div>
-        <div>
-          <label>Код доступа</label>
-          <input type="text" value={accessCode} onChange={e => setAccessCode(e.target.value)} />
-        </div>
-        <button type="submit">Зарегистрироваться</button>
-      </form>
+    <div className="register-page">
+      <div className="register-form-container">
+        <h2 className="register-title">Регистрация</h2>
+        <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="Фамилия" value={surname} onChange={e => setSurname(e.target.value)} required className="register-input" />
+          <input type="text" placeholder="Имя" value={name} onChange={e => setName(e.target.value)} required className="register-input" />
+          <input type="text" placeholder="Отчество" value={patronymic} onChange={e => setPatronymic(e.target.value)} required className="register-input" />
+          <input type="text" placeholder="Логин" value={login} onChange={e => setLogin(e.target.value)} required className="register-input" />
+          <input type="password" placeholder="Пароль" value={password} onChange={e => setPassword(e.target.value)} required className="register-input" />
+          <input type="text" placeholder="Код доступа" value={accessCode} onChange={e => setAccessCode(e.target.value)} className="register-input" />
+          <button type="submit" className="register-button">Зарегистрироваться</button>
+        </form>
+      </div>
     </div>
   );
 };

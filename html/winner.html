@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Победители соревнований</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #d7edff;
+    }
+
+    header {
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+    }
+
+    .logo {
+      background-color: #e5f3ff;
+      color: #2c8eff;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #2c8eff;
+      font-weight: 500;
+    }
+
+    .auth-buttons button {
+      padding: 6px 14px;
+      border: 1px solid #2c8eff;
+      background-color: white;
+      color: #2c8eff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .auth-buttons button:first-child {
+      background-color: #2c8eff;
+      color: white;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c8eff;
+    }
+
+    h3 {
+      text-align: center;
+      color: #333;
+    }
+
+    .date-item {
+      cursor: pointer;
+      padding: 10px 0;
+      border-bottom: 1px solid #b8dffc;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .date-item:hover {
+      color: #2c8eff;
+    }
+
+    .date-item.active {
+      color: #2c8eff;
+    }
+
+    .tables {
+      margin-top: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .section-title {
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ТурТрек</div>
+    <nav>
+      <a href="#">Участники</a>
+      <a href="#">Даты соревнований</a>
+      <a href="#">Победители</a>
+    </nav>
+    <div class="auth-buttons">
+      <button onclick="location.href='login.html'">Вход</button>
+      <button onclick="location.href='register.html'">Регистрация</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Победители соревнований</h1>
+    <h3>Выберите дату, чтобы посмотреть победителей:</h3>
+
+    <div id="dates">
+      <div class="date-item" onclick="toggleTables('d1')">01.05.2025</div>
+      <div class="date-item" onclick="toggleTables('d2')">12.06.2025</div>
+      <div class="date-item" onclick="toggleTables('d3')">21.07.2025</div>
+      <div class="date-item" onclick="toggleTables('d4')">01.09.2025</div>
+      <div class="date-item" onclick="toggleTables('d5')">10.10.2025</div>
+      <div class="date-item" onclick="toggleTables('d6')">31.12.2025</div>
+    </div>
+
+    <!-- Таблицы победителей -->
+    <div class="tables hidden" id="d1">
+      <div class="section-title">Команды:</div>
+      <table>
+        <tr><th>Название</th><th>Место</th></tr>
+        <tr><td>Огонь</td><td>1</td></tr>
+        <tr><td>Ветер</td><td>2</td></tr>
+      </table>
+      <div class="section-title">Участники:</div>
+      <table>
+        <tr><th>Имя</th><th>Фамилия</th><th>Место</th></tr>
+        <tr><td>Иван</td><td>Иванов</td><td>1</td></tr>
+        <tr><td>Петр</td><td>Петров</td><td>2</td></tr>
+      </table>
+    </div>
+
+    <!-- Пример скрытых блоков — ты можешь продублировать и заменить данные -->
+    <div class="tables hidden" id="d2">...</div>
+    <div class="tables hidden" id="d3">...</div>
+    <div class="tables hidden" id="d4">...</div>
+    <div class="tables hidden" id="d5">...</div>
+    <div class="tables hidden" id="d6">...</div>
+  </div>
+
+  <script>
+    function toggleTables(id) {
+      document.querySelectorAll('.tables').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.date-item').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.remove('hidden');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { getCompetitions } from '../api/competitionApi';
-import CompetitionTable from '../components/CompetitionTable';
-
-type Competition = {
-  id: number;
-  date?: string;
-  [key: string]: any;
-};
+import './Competitions.css';
 
 const Competitions: React.FC = () => {
-  const [competitions, setCompetitions] = useState<Competition[]>([]);
+  const [competitions, setCompetitions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     getCompetitions()
-      .then((data) => {
+      .then(data => {
         setCompetitions(Array.isArray(data) ? data : []);
         setLoading(false);
       })
@@ -25,13 +19,31 @@ const Competitions: React.FC = () => {
       });
   }, []);
 
-  if (loading) return <div>Загрузка...</div>;
-  if (error) return <div>{error}</div>;
-
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Список дат соревнований</h2>
-      <CompetitionTable competitions={competitions} />
+    <div className="competitions-page">
+      <h2 className="competitions-title">Список дат соревнований</h2>
+      <div className="competitions-table-container">
+        {loading && <div>Загрузка...</div>}
+        {error && <div>{error}</div>}
+        {!loading && !error && (
+          <table className="competitions-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Дата</th>
+              </tr>
+            </thead>
+            <tbody>
+              {competitions.map((c) => (
+                <tr key={c.id}>
+                  <td>{c.id}</td>
+                  <td>{c.date || '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };

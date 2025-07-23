@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Login.css';
 
 const Login: React.FC = () => {
   const [login, setLogin] = useState('');
@@ -11,22 +12,32 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '2rem auto' }}>
-      <h2>Вход в аккаунт</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Логин</label>
-          <input type="text" value={login} onChange={e => setLogin(e.target.value)} required />
-        </div>
-        <div>
-          <label>Пароль</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
-        </div>
-        <button type="submit">Войти</button>
-      </form>
-      <p>
-        Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
-      </p>
+    <div className="login-page">
+      <div className="login-form-container">
+        <h2 className="login-title">Вход</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Логин"
+            value={login}
+            onChange={e => setLogin(e.target.value)}
+            required
+            className="login-input"
+          />
+          <input
+            type="password"
+            placeholder="Пароль"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            className="login-input"
+          />
+          <div className="login-form-actions">
+            <button type="submit" className="login-button">Войти</button>
+            <Link to="/register" className="login-link">зарегистрируйтесь</Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
