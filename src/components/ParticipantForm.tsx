@@ -1,44 +1,62 @@
 import React, { useState } from 'react';
 import { createParticipant, updateParticipant } from '../api/participantApi';
 
-type Participant = {
+interface Participant {
   id?: number;
-  name: string;
-  // добавьте другие поля по необходимости
-};
+  surname?: string;
+  name?: string;
+  gender?: string;
+  team?: string;
+  date?: string;
+  [key: string]: any;
+}
 
-type Props = {
+interface Props {
   initialData?: Participant;
   onSuccess?: () => void;
-};
+}
 
 const ParticipantForm: React.FC<Props> = ({ initialData, onSuccess }) => {
+  const [surname, setSurname] = useState(initialData?.surname || '');
   const [name, setName] = useState(initialData?.name || '');
-  // добавьте другие useState для остальных полей
+  const [gender, setGender] = useState(initialData?.gender || '');
+  const [team, setTeam] = useState(initialData?.team || '');
+  const [date, setDate] = useState(initialData?.date || '');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = { name }; // добавьте остальные поля
+    setLoading(true);
+    setError(null);
     try {
+      const data = { surname, name, gender, team, date };
       if (initialData?.id) {
         await updateParticipant(initialData.id, data);
       } else {
         await createParticipant(data);
       }
       if (onSuccess) onSuccess();
-    } catch (err) {
-      alert('Ошибка при сохранении');
+    } catch (err: any) {
+      setError(err?.response?.data?.detail || 'Ошибка сохранения');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Имя</label>
-        <input value={name} onChange={e => setName(e.target.value)} required />
-      </div>
-      {/* другие поля */}
-      <button type="submit">{initialData ? 'Сохранить' : 'Добавить'}</button>
+    <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
+      <input type="text" placeholder="Фамилия" value={surname} onChange={e => setSurname(e.target.value)} required />
+      <input type="text" placeholder="Имя" value={name} onChange={e => setName(e.target.value)} required />
+      <select value={gender} onChange={e => setGender(e.target.value)} required>
+        <option value="">Пол</option>
+        <option value="male">Мужской</option>
+        <option value="female">Женский</option>
+      </select>
+      <input type="text" placeholder="Команда" value={team} onChange={e => setTeam(e.target.value)} required />
+      <input type="date" placeholder="Дата" value={date} onChange={e => setDate(e.target.value)} required />
+      <button type="submit" disabled={loading}>{loading ? 'Сохранение...' : (initialData ? 'Сохранить' : 'Добавить')}</button>
+      {error && <div style={{ color: 'red', marginTop: 10 }}>{error}</div>}
     </form>
   );
 };

@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { createCompetition, updateCompetition } from '../api/competitionApi';
+import { createTeam, updateTeam } from '../api/teamApi';
 
-interface Competition {
+interface Team {
   id?: number;
-  date?: string;
+  name?: string;
+  competitions_id?: number;
   [key: string]: any;
 }
 
 interface Props {
-  initialData?: Competition;
+  initialData?: Team;
   onSuccess?: () => void;
 }
 
-const CompetitionForm: React.FC<Props> = ({ initialData, onSuccess }) => {
-  const [date, setDate] = useState(initialData?.date || '');
+const TeamForm: React.FC<Props> = ({ initialData, onSuccess }) => {
+  const [name, setName] = useState(initialData?.name || '');
+  const [competitionsId, setCompetitionsId] = useState(initialData?.competitions_id || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,11 +24,11 @@ const CompetitionForm: React.FC<Props> = ({ initialData, onSuccess }) => {
     setLoading(true);
     setError(null);
     try {
-      const data = { date };
+      const data = { name, competitions_id: competitionsId };
       if (initialData?.id) {
-        await updateCompetition(initialData.id, data);
+        await updateTeam(initialData.id, data);
       } else {
-        await createCompetition(data);
+        await createTeam(data);
       }
       if (onSuccess) onSuccess();
     } catch (err: any) {
@@ -38,11 +40,12 @@ const CompetitionForm: React.FC<Props> = ({ initialData, onSuccess }) => {
 
   return (
     <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
-      <input type="date" placeholder="Дата" value={date} onChange={e => setDate(e.target.value)} required />
+      <input type="text" placeholder="Название команды" value={name} onChange={e => setName(e.target.value)} required />
+      <input type="number" placeholder="ID соревнования" value={competitionsId} onChange={e => setCompetitionsId(e.target.value)} required />
       <button type="submit" disabled={loading}>{loading ? 'Сохранение...' : (initialData ? 'Сохранить' : 'Добавить')}</button>
       {error && <div style={{ color: 'red', marginTop: 10 }}>{error}</div>}
     </form>
   );
 };
 
-export default CompetitionForm; 
+export default TeamForm; 

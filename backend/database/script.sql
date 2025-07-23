@@ -58,3 +58,9 @@ CREATE TABLE IF NOT EXISTS team_results (
   FOREIGN KEY (participants_results_id, participants_results_participants_id, participants_results_teams_id, participants_results_competitions_id)
     REFERENCES participants_results(id, participants_id, teams_id, competitions_id)
 );
+
+-- Тестовые пользователи
+INSERT OR IGNORE INTO users (full_name, login, password, gender, role)
+VALUES
+  ('Админов Админ Админович', 'admin', 'adminpassword', 'male', 'admin'),
+  ('Пользов Петр Пользович', 'user', 'userpassword', 'male', 'user');
