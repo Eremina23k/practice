@@ -1,24 +1,24 @@
 import React from 'react';
 
-type Winner = {
+type TeamWinner = {
   id: number;
   name?: string;
-  team?: string;
+  totalTime?: string;
   position?: number;
   [key: string]: any;
 };
 
-const WinnerTable: React.FC<{ winners: Winner[] }> = ({ winners }) => {
+const TeamWinnerTable: React.FC<{ winners: TeamWinner[] }> = ({ winners }) => {
   if (!winners || winners.length === 0) {
-    return <div>Нет данных о победителях</div>;
+    return <div>Нет данных о командах-победителях</div>;
   }
   return (
     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
       <thead>
         <tr>
           <th>ID</th>
-          <th>Имя</th>
           <th>Команда</th>
+          <th>Общее время</th>
           <th>Место</th>
         </tr>
       </thead>
@@ -27,7 +27,7 @@ const WinnerTable: React.FC<{ winners: Winner[] }> = ({ winners }) => {
           <tr key={w.id}>
             <td>{w.id}</td>
             <td>{w.name || '-'}</td>
-            <td>{w.team || '-'}</td>
+            <td>{w.totalTime || '-'}</td>
             <td>{w.position || '-'}</td>
           </tr>
         ))}
@@ -36,4 +36,4 @@ const WinnerTable: React.FC<{ winners: Winner[] }> = ({ winners }) => {
   );
 };
 
-export default WinnerTable; 
+export default TeamWinnerTable; 
