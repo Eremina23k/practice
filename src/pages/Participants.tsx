@@ -10,11 +10,24 @@ const Participants: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editParticipant, setEditParticipant] = useState<any | null>(null);
 
+  // Фильтры и поиск
+  const [filterDate, setFilterDate] = useState('');
+  const [filterGender, setFilterGender] = useState('');
+  const [filterTeam, setFilterTeam] = useState('');
+  const [search, setSearch] = useState('');
+
+  // Для выпадающих списков
+  const [dates, setDates] = useState<string[]>([]);
+  const [teams, setTeams] = useState<string[]>([]);
+
   const loadParticipants = () => {
     setLoading(true);
     getParticipants()
       .then(data => {
-        setParticipants(Array.isArray(data) ? data : []);
+        const arr = Array.isArray(data) ? data : [];
+        setParticipants(arr);
+        setDates([...new Set(arr.map((p: any) => p.date).filter(Boolean))]);
+        setTeams([...new Set(arr.map((p: any) => p.team).filter(Boolean))]);
         setLoading(false);
       })
       .catch(() => {
@@ -50,6 +63,19 @@ const Participants: React.FC = () => {
     loadParticipants();
   };
 
+  // Фильтрация и поиск
+  const filtered = participants.filter(p => {
+    return (
+      (!filterDate || p.date === filterDate) &&
+      (!filterGender || p.gender === filterGender) &&
+      (!filterTeam || p.team === filterTeam) &&
+      (!search ||
+        (p.surname && p.surname.toLowerCase().includes(search.toLowerCase())) ||
+        (p.name && p.name.toLowerCase().includes(search.toLowerCase()))
+      )
+    );
+  });
+
   return (
     <div className="participants-page">
       <h2 className="participants-title">Список участников</h2>
@@ -60,12 +86,22 @@ const Participants: React.FC = () => {
         )}
         <div className="participants-filters">
           <label>Фильтры:</label>
-          <select><option>Дата соревнований</option></select>
-          <select><option>Пол</option></select>
-          <select><option>Команда</option></select>
+          <select value={filterDate} onChange={e => setFilterDate(e.target.value)}>
+            <option value="">Дата соревнований</option>
+            {dates.map(date => <option key={date} value={date}>{date}</option>)}
+          </select>
+          <select value={filterGender} onChange={e => setFilterGender(e.target.value)}>
+            <option value="">Пол</option>
+            <option value="male">Мужской</option>
+            <option value="female">Женский</option>
+          </select>
+          <select value={filterTeam} onChange={e => setFilterTeam(e.target.value)}>
+            <option value="">Команда</option>
+            {teams.map(team => <option key={team} value={team}>{team}</option>)}
+          </select>
           <div className="participants-search">
-            <input type="text" placeholder="Поиск..." />
-            <button>🔍</button>
+            <input type="text" placeholder="Поиск..." value={search} onChange={e => setSearch(e.target.value)} />
+            <button disabled>🔍</button>
           </div>
         </div>
         {loading && <div>Загрузка...</div>}
@@ -83,7 +119,7 @@ const Participants: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {participants.map((p) => (
+              {filtered.map((p) => (
                 <tr key={p.id}>
                   <td>{p.surname || '-'}</td>
                   <td>{p.name || '-'}</td>

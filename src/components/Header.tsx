@@ -18,7 +18,6 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('storage', onStorage);
   }, []);
 
-  // Обновлять роль при каждом рендере (например, после логина/выхода)
   useEffect(() => {
     setRole(getRole());
   });
@@ -32,7 +31,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="header">
-      <div className="logo">ТурТрек</div>
+      <Link to="/" className="logo-minimal" aria-label="Главная" />
       <nav className="nav">
         {role === 'admin' && <Link to="/admin">Проведение</Link>}
         <Link to="/participants">Участники</Link>

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
-// Импортируйте loginUser из api (создайте, если нет)
-import { loginUser } from '../api/authApi.tsx';
+import { loginUser } from '../api/authApi';
 
 const Login: React.FC = () => {
   const [login, setLogin] = useState('');
@@ -16,8 +15,7 @@ const Login: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await loginUser(login, password);
-      // Ожидается, что backend вернёт токен и роль
+      const data = await loginUser(login, password) as any;
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
       navigate('/');

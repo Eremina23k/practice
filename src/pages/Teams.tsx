@@ -10,11 +10,18 @@ const Teams: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editTeam, setEditTeam] = useState<any | null>(null);
 
+  // Фильтр и поиск
+  const [filterDate, setFilterDate] = useState('');
+  const [search, setSearch] = useState('');
+  const [dates, setDates] = useState<string[]>([]);
+
   const loadTeams = () => {
     setLoading(true);
     getTeams()
       .then(data => {
-        setTeams(Array.isArray(data) ? data : []);
+        const arr = Array.isArray(data) ? data : [];
+        setTeams(arr);
+        setDates([...new Set(arr.map((t: any) => t.competitions_id).filter(Boolean))]);
         setLoading(false);
       })
       .catch(() => {
@@ -50,6 +57,14 @@ const Teams: React.FC = () => {
     loadTeams();
   };
 
+  // Фильтрация и поиск
+  const filtered = teams.filter(t => {
+    return (
+      (!filterDate || String(t.competitions_id) === filterDate) &&
+      (!search || (t.name && t.name.toLowerCase().includes(search.toLowerCase())))
+    );
+  });
+
   return (
     <div className="teams-page">
       <h2 className="teams-title">Список команд</h2>
@@ -58,6 +73,17 @@ const Teams: React.FC = () => {
         {showForm && (
           <TeamForm initialData={editTeam} onSuccess={handleFormSuccess} />
         )}
+        <div className="participants-filters">
+          <label>Фильтр:</label>
+          <select value={filterDate} onChange={e => setFilterDate(e.target.value)}>
+            <option value="">Дата соревнования (ID)</option>
+            {dates.map(date => <option key={date} value={date}>{date}</option>)}
+          </select>
+          <div className="participants-search">
+            <input type="text" placeholder="Поиск по названию..." value={search} onChange={e => setSearch(e.target.value)} />
+            <button disabled>🔍</button>
+          </div>
+        </div>
         {loading && <div>Загрузка...</div>}
         {error && <div>{error}</div>}
         {!loading && !error && (
@@ -71,7 +97,7 @@ const Teams: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {teams.map((t) => (
+              {filtered.map((t) => (
                 <tr key={t.id}>
                   <td>{t.id}</td>
                   <td>{t.name || '-'}</td>

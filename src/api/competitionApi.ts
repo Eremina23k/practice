@@ -25,4 +25,9 @@ export const updateCompetition = async (id: number, data: { date: string }) => {
 export const deleteCompetition = async (id: number) => {
   const response = await axios.delete(`${API_URL}/competition/${id}`);
   return response.data;
+};
+
+export const drawCompetition = async (competitionId: number) => {
+  const response = await axios.post(`${API_URL}/competition/draw`, { competition_id: competitionId });
+  return response.data;
 }; 

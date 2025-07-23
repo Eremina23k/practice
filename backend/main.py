@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from database import Base, engine
+from database.database import Base, engine
 from routers import competition, participant, participantResult, team, teamResult, user
 
 app = FastAPI()

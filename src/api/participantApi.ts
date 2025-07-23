@@ -25,4 +25,13 @@ export const updateParticipant = async (id: number, data: any) => {
 export const deleteParticipant = async (id: number) => {
   const response = await axios.delete(`${API_URL}/participant/${id}`);
   return response.data;
+};
+
+export const uploadParticipantsFile = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await axios.post(`${API_URL}/participant/upload`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data;
 }; 
