@@ -1,7 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import date, time
-from sqlalchemy import Enum
+# from sqlalchemy import Enum
+from enum import Enum
 
 # Соревнования 
 class CompetitionIn(BaseModel): 
@@ -37,6 +38,7 @@ class UserIn(BaseModel):
     password: str
     gender: str
     role: UserRole
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
 class UserOut(UserIn):
     id: int

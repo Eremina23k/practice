@@ -1,28 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Participant = {
   id: number;
-  name?: string;
-  [key: string]: any;
+  name: string;
+  // Добавьте другие поля по вашей структуре таблицы participants
 };
 
-const ParticipantTable: React.FC<{ participants: Participant[] }> = ({ participants }) => {
-  if (!participants || participants.length === 0) {
-    return <div>Нет данных об участниках</div>;
-  }
+const ParticipantTable: React.FC = () => {
+  const [participants, setParticipants] = useState<Participant[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // @ts-ignore
+    window.api.getParticipants().then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setParticipants(data);
+      }
+    });
+  }, []);
+
+  if (error) return <div>Ошибка: {error}</div>;
+
   return (
-    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <table>
       <thead>
         <tr>
           <th>ID</th>
           <th>Имя</th>
+          {/* Добавьте другие заголовки */}
         </tr>
       </thead>
       <tbody>
         {participants.map((p) => (
           <tr key={p.id}>
             <td>{p.id}</td>
-            <td>{p.name || '-'}</td>
+            <td>{p.name}</td>
+            {/* Добавьте другие ячейки */}
           </tr>
         ))}
       </tbody>
