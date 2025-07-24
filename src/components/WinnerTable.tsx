@@ -1,4 +1,11 @@
 import React from 'react';
+import axios from 'axios';
+const API_URL = 'http://localhost:8000';
+
+export const getParticipants = async () => {
+  const response = await axios.get(`${API_URL}/participant/`);
+  return response.data;
+};
 
 type Winner = {
   id: number;
@@ -63,3 +70,4 @@ const WinnerTable: React.FC<{ winners: Winner[] }> = ({ winners }) => {
 };
 
 export default WinnerTable;
+ 

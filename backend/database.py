@@ -1,8 +1,8 @@
+from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
 
 # Путь к SQLite-базе
-SQLALCHEMY_DATABASE_URL = "sqlite:///./CompetitionDB.bd"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./database/CompetitionDB.bd"
 
 # Создание движка
 engine = create_engine(
