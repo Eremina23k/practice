@@ -1,0 +1,36 @@
+.competitions-page {
+  background-color: #d7edff;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.competitions-title {
+  text-align: center;
+  color: #2c8eff;
+  margin-top: 30px;
+}
+
+.competitions-table-container {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.competitions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.competitions-table th,
+.competitions-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.competitions-table th {
+  background-color: #f0f0f0;
+} 

@@ -1,9 +1,8 @@
-import { app, BrowserWindow } from 'electron'
-import { createRequire } from 'node:module'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import Database from 'better-sqlite3';
 
-const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // The built directory structure
@@ -46,6 +45,20 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 }
+
+// Инициализация базы данных SQLite
+const dbPath = path.join(__dirname, '../backend/database/CompetitionDB.bd');
+const db = new Database(dbPath);
+
+// IPC-обработчик: получить всех участников
+ipcMain.handle('get-participants', async () => {
+  try {
+    const stmt = db.prepare('SELECT * FROM participants');
+    return stmt.all();
+  } catch (error: any) {
+    return { error: error.message };
+  }
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

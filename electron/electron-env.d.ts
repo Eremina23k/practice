@@ -25,3 +25,11 @@ declare namespace NodeJS {
 interface Window {
   ipcRenderer: import('electron').IpcRenderer
 }
+
+declare global {
+  interface Window {
+    api: {
+      getParticipants: () => Promise<any[]>;
+    };
+  }
+}
